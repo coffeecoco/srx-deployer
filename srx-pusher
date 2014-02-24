@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+SSHKEY=sshkey
+SSHUSER=GO-pusher
+
+SSHOPTIONS="-o User=\"$SSHUSER\" -o IdentityFile=\"$SSHKEY\" -q"
+
+printusage() {
+  echo "Usage: $0 (test|prod) config.csv"
+  exit 1
+}
+
+. config
+if [ -z "$2" ]; then
+  printusage
+fi
+
+CSV=$2
+
+tail -n+3 "$CSV" | InternetInterface=$InternetInterface ./Juniper-SRX-generator.sh > rules.conf
+scp $SSHOPTIONS rules.conf $FirewallIP:
+cat <<HEREDOC
+Enter:
+configure
+load set rules.conf
+show | compare
+commit
+HEREDOC
+ssh $SSHOPTIONS $FirewallIP

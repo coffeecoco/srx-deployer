@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case "$1" in
+ "test")
+   FirewallIP=1.2.3.4
+   InternetInterface=vlan.100
+   ;;
+ "prod")
+   FirewallIP=1.2.3.4
+   InternetInterface=reth0
+   ;;
+ *)
+   printusage
+   ;;
+esac
