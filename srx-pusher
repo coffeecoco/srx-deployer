@@ -2,17 +2,15 @@
 
 set -e
 
-SSHKEY=sshkey
-SSHUSER=GO-pusher
-
-SSHOPTIONS="-o User=\"$SSHUSER\" -o IdentityFile=\"$SSHKEY\" -q"
-
 printusage() {
   echo "Usage: $0 (test|prod) config.csv"
   exit 1
 }
 
 . config
+
+SSHOPTIONS="-o User=\"$SSHUSER\" -o IdentityFile=\"$SSHKEY\" -q"
+
 if [ -z "$2" ]; then
   printusage
 fi

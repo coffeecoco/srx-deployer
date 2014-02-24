@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SSHUSER=-srx-pusher
+SSHKEY=sshkey
+
 case "$1" in
  "test")
    FirewallIP=1.2.3.4
